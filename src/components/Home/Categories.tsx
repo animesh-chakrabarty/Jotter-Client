@@ -1,8 +1,7 @@
-import React from 'react'
 
 const Categories = () => {
   return (
-    <div className='flex-[30%]'>Categories</div>
+    <div className='flex-[60%] border rounded-xl'></div>
   )
 }
 
