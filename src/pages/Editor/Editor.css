@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Editor - placeholder styling */
+p.is-editor-empty:first-child::before {
+  color: #cac6c3;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Editor - overwrite outline on EditorContent while focused */
+.ProseMirror-focused {
+  outline: none;
+}
+
+/* Editor - overwrite heading styles */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+    margin-top: 2.5rem;
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2 {
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 1rem;
+  }
+  :root {
+    --radius: 0.5rem;
+  }
+}
+
+/* Editor - overwrite list styles */
+@layer base {
+  ul {
+    list-style-type: disc;
+    margin-left: 1.25rem; /* Add some left margin */
+  }
+
+  ol {
+    list-style-type: decimal;
+    margin-left: 1.25rem;
+  }
+
+  li {
+    margin-top: 0.25rem; /* Optional: space between list items */
+  }
+}
+
+/* Editor - overwrite nested lists */
+/* Style for top-level bullet list */
+.ProseMirror ul {
+  list-style-type: disc; /* Default bullet style */
+  padding-left: 1.5rem;
+}
+
+/* Style for first nested level */
+.ProseMirror ul ul {
+  list-style-type: circle; /* Use circle bullets for first nested level */
+  padding-left: 1.5rem;
+}
+
+/* Style for second nested level */
+.ProseMirror ul ul ul {
+  list-style-type: square; /* Use square bullets for second nested level */
+  padding-left: 1.5rem;
+}
+
+/* Additional levels if needed */
+.ProseMirror ul ul ul ul {
+  list-style-type: lower-alpha; /* Alphabetic list for deeper levels */
+  padding-left: 1.5rem;
+}
+
+/* Editor - tasklist styles */
+ul[data-type="taskList"] {
+  list-style: none;
+  margin-left: 0;
+  padding: 0;
+
+  li {
+    align-items: flex-start;
+    display: flex;
+
+    > label {
+      flex: 0 0 auto;
+      margin-right: 0.5rem;
+      user-select: none;
+    }
+
+    > div {
+      flex: 1 1 auto;
+    }
+  }
+
+  input[type="checkbox"] {
+    cursor: pointer;
+  }
+
+  ul[data-type="taskList"] {
+    margin: 0;
+  }
+}
+
+/* Editor - inline code styles */
+@layer base {
+  code {
+    background-color: #f6f2ff;
+    border-radius: 0.4rem;
+    color: #000000;
+    font-size: 0.85rem;
+    padding: 0.25em 0.3em;
+  }
+}
+
+/* Editor - codeblock styles */
+@layer base {
+  pre {
+    background: #2e2b29;
+    border-radius: 0.5rem;
+    color: #ffffff;
+    font-family: "JetBrainsMono", monospace;
+    margin: 1.5rem 0;
+    padding: 0.75rem 1rem;
+
+    code {
+      background: none;
+      color: inherit;
+      font-size: 0.8rem;
+      padding: 0;
+    }
+  }
+}
+
+/* Editor - blockquote styles */
+@layer base {
+  blockquote {
+    border-left: 3px solid #e7e4e2;
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+  }
+}
+
+/* Editor -  scrollbar customization */
+.editor-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.editor-content::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 4px;
+}
+
+.editor-content::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+/* For Firefox */
+.editor-content {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db #f0f0f0;
+}

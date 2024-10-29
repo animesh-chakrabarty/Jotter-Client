@@ -7,6 +7,8 @@ import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import Placeholder from "@tiptap/extension-placeholder";
 
+import "./Editor.css";
+
 const Editor: React.FC = () => {
   const [content, setContent] = useState<string | null>(null);
 
