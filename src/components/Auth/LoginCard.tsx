@@ -11,15 +11,27 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useState } from "react";
 
-const LoginCard = () => {
+const LoginCard = ({ setIsLoginModalOpen }) => {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
 
+  const handleOverlayClick = (e) => {
+    setIsLoginModalOpen((prev) => !prev);
+  };
+
+  const handleCardClick = (e) => {
+    e.stopPropagation();
+  };
+
   console.log(email, password);
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <Card className="w-[400px] bg-white text-lato">
-        <CardHeader className="mb-4">
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+      onClick={handleOverlayClick}
+    >
+      <Card className="w-[400px] bg-white text-lato" onClick={handleCardClick}>
+        <CardHeader className="mb-4 items-center">
           <CardTitle className="">Log In</CardTitle>
           <CardDescription>Enter your account credentials</CardDescription>
         </CardHeader>
