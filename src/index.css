@@ -3,11 +3,31 @@
 @tailwind utilities;
 
 body {
-  height: 100vh;
-  background-color: #F9FAFE;
+  min-height: 100vh; /* Ensures the background covers the full viewport height */
+  background-color: #f9fafe;
 }
 
 #root {
-  height: 100%;
+  min-height: 100%;
 }
 
+/* For WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db #f0f0f0;
+}

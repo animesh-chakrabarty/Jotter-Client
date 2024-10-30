@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 
 const App = () => {
   return (
-    <main className="h-full w-full bg-[#F5F4F4]">
+    <main className="h-full w-full">
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path="/editor" element={<Editor />} />

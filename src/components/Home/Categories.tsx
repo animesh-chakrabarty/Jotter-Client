@@ -11,7 +11,7 @@ const Categories = () => {
             <div key={i} className="w-full">
               <Button
                 variant={"secondary"}
-                className="w-full justify-start text-lg px-2 text-gray-700 hover:bg-gray-200 font-lato"
+                className="bg-[#f9fafe] w-full justify-start text-lg px-2 text-gray-700 hover:bg-gray-200 font-lato"
               >
                 {item}
               </Button>
