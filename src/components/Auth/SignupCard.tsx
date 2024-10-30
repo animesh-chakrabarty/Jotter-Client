@@ -11,11 +11,10 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { ToastAction, ToastClose } from "@/components/ui/toast";
 
 const baseURL = "http://localhost:8000/api";
 
-const SignupCard = ({ setIsSignupModalOpen }) => {
+const SignupCard = ({ setIsSignupModalOpen, setIsOTPModalOpen }) => {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [firstName, setFirstName] = useState<string | null>(null);
@@ -26,11 +25,12 @@ const SignupCard = ({ setIsSignupModalOpen }) => {
   const [error, setError] = useState<string | null>(null);
 
   const { toast } = useToast();
+
   useEffect(() => {
     if (isError) {
       toast({
-        title: `${error || "somethoing went wrong"}`,
-        className: ""
+        variant: "destructive",
+        title: `${error || "something went wrong"}`,
       });
       setIsError(false);
       setError(null);
@@ -72,6 +72,9 @@ const SignupCard = ({ setIsSignupModalOpen }) => {
         throw new Error("Error while signing up : " + resJson.message);
       }
 
+      localStorage.setItem("jotter-token", resJson.token);
+      setIsSignupModalOpen(false);
+      setIsOTPModalOpen(true);
       console.log(resJson);
     } catch (err) {
       console.error(err.message || err.toString());
@@ -146,9 +149,7 @@ const SignupCard = ({ setIsSignupModalOpen }) => {
               Signup
             </Button>
           ) : (
-            <Button className="w-full text-base" onClick={handleSignup}>
-              ...signing up
-            </Button>
+            <Button className="w-full text-base">...signing up</Button>
           )}
         </CardFooter>
       </Card>

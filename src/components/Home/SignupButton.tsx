@@ -1,9 +1,11 @@
 import { useState } from "react";
 import SignupCard from "../Auth/SignupCard";
 import { Button } from "../ui/button";
+import OTPCard from "../Auth/OTPCard";
 
 const SignupButton = () => {
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [isOTPModalOpen, setIsOTPModalOpen] = useState(false);
 
   return (
     <div>
@@ -14,8 +16,12 @@ const SignupButton = () => {
         Join us now
       </Button>
       {isSignupModalOpen && (
-        <SignupCard setIsSignupModalOpen={setIsSignupModalOpen} />
+        <SignupCard
+          setIsSignupModalOpen={setIsSignupModalOpen}
+          setIsOTPModalOpen={setIsOTPModalOpen}
+        />
       )}
+      {isOTPModalOpen && <OTPCard setIsOTPModalOpen={setIsOTPModalOpen}/>}
     </div>
   );
 };
