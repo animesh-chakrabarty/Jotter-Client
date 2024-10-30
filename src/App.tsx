@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Editor from "./pages/Editor/Editor";
 import Home from "./pages/Home";
+import { Toaster } from "./components/ui/toaster";
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
         <Route path={"/"} element={<Home />} />
         <Route path="/editor" element={<Editor />} />
       </Routes>
+      <Toaster />
     </main>
   );
 };

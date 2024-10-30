@@ -9,13 +9,33 @@ import {
 } from "@/components/ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction, ToastClose } from "@/components/ui/toast";
+
+const baseURL = "http://localhost:8000/api";
 
 const SignupCard = ({ setIsSignupModalOpen }) => {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [firstName, setFirstName] = useState<string | null>(null);
   const [lastName, setLastName] = useState<string | null>(null);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const { toast } = useToast();
+  useEffect(() => {
+    if (isError) {
+      toast({
+        title: `${error || "somethoing went wrong"}`,
+        className: ""
+      });
+      setIsError(false);
+      setError(null);
+    }
+  }, [isError, error]);
 
   const handleOverlayClick = (e) => {
     setIsSignupModalOpen((prev) => !prev);
@@ -25,7 +45,38 @@ const SignupCard = ({ setIsSignupModalOpen }) => {
     e.stopPropagation();
   };
 
-  console.log(email, password, firstName, lastName);
+  const handleSignup = async () => {
+    const bodyData = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
+
+    try {
+      setIsLoading(true);
+
+      const res = await fetch(baseURL + "/auth/sign-up", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bodyData),
+      });
+      const resJson = await res.json();
+      setIsLoading(false);
+
+      if (!res.ok) {
+        setIsError(true);
+        setError(resJson.message);
+        throw new Error("Error while signing up : " + resJson.message);
+      }
+
+      console.log(resJson);
+    } catch (err) {
+      console.error(err.message || err.toString());
+    }
+  };
 
   return (
     <div
@@ -90,7 +141,15 @@ const SignupCard = ({ setIsSignupModalOpen }) => {
           </form>
         </CardContent>
         <CardFooter className="flex justify-center w-full">
-          <Button className="w-full text-base">Signup</Button>
+          {!isLoading ? (
+            <Button className="w-full text-base" onClick={handleSignup}>
+              Signup
+            </Button>
+          ) : (
+            <Button className="w-full text-base" onClick={handleSignup}>
+              ...signing up
+            </Button>
+          )}
         </CardFooter>
       </Card>
     </div>
