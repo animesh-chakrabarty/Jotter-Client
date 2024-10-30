@@ -10,11 +10,11 @@ const Home = () => {
     <div className="container px-28">
       <Navbar />
       <div className="flex mt-4 px-10 h-[90vh] gap-4">
-        <div className="flex-[30%] flex flex-col gap-4">
+        <div className="left-section flex-[30%] flex flex-col ">
           <Categories />
           <JoinUs />
         </div>
-        <div className="flex flex-col flex-[70%] gap-4">
+        <div className="right-section flex-[70%] flex flex-col gap-4">
           <Search />
           <Blogs />
         </div>
