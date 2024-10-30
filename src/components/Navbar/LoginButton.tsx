@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Button } from "./ui/button";
-import LoginCard from "./Auth/LoginCard";
+import { Button } from "../ui/button";
+import LoginCard from "../Auth/LoginCard";
 
-const Login = () => {
+const LoginButton = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  console.log(isLoginModalOpen);
+
   return (
     <div>
       <Button
@@ -20,4 +20,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginButton;

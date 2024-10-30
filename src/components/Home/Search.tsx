@@ -11,7 +11,7 @@ const Search = () => {
       <input
         type="text"
         className="text-gray-700 rounded-lg px-6 py-3 hover:shadow-lg"
-        placeholder="Enter category or blogpost name..."
+        placeholder="Search article..."
       />
     </div>
   );

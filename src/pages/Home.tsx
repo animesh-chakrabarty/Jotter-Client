@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar/Navbar";
 import "./Pages.css";
 import Categories from "@/components/Home/Categories";
 import Search from "@/components/Home/Search";

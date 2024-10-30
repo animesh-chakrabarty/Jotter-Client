@@ -1,5 +1,5 @@
-import logo from "../assets/logo.png";
-import Login from "./Login";
+import logo from "../../assets/logo.png";
+import LoginButton from "./LoginButton";
 
 const Navbar = () => {
   return (
@@ -9,7 +9,7 @@ const Navbar = () => {
         <img src={logo} alt="" className="h-10" />
       </div>
       <div className="login flex gap-4">
-        <Login />
+        <LoginButton />
       </div>
     </div>
   );
