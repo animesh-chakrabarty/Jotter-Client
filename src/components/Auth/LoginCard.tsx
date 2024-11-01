@@ -9,11 +9,33 @@ import {
 } from "@/components/ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { useDispatch } from "react-redux";
+import { setToken } from "@/store/slices/tokenSlice";
+
+const baseURL = "http://localhost:8000/api";
 
 const LoginCard = ({ setIsLoginModalOpen }) => {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+  useEffect(() => {
+    if (isError) {
+      toast({
+        variant: "destructive",
+        title: `${error || "something went wrong"}`,
+      });
+      setIsError(false);
+      setError(null);
+    }
+  }, [isError, error]);
 
   const handleOverlayClick = (e) => {
     setIsLoginModalOpen((prev) => !prev);
@@ -23,7 +45,35 @@ const LoginCard = ({ setIsLoginModalOpen }) => {
     e.stopPropagation();
   };
 
-  console.log(email, password);
+  const handleLogin = async () => {
+    const bodyData = { email, password };
+
+    try {
+      setIsLoading(true);
+
+      const res = await fetch(baseURL + "/auth/log-in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bodyData),
+      });
+      const resJson = await res.json();
+      setIsLoading(false);
+
+      if (!res.ok) {
+        setIsError(true);
+        setError(resJson.message || resJson.toString());
+        throw new Error(resJson.message || resJson.toString());
+      }
+
+      localStorage.setItem("jotter-token", resJson.token);
+      dispatch(setToken(resJson.token));
+      setIsLoginModalOpen(false);
+    } catch (err) {
+      console.error(err.message || err.toString());
+    }
+  };
 
   return (
     <div
@@ -63,8 +113,15 @@ const LoginCard = ({ setIsLoginModalOpen }) => {
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-center w-full">
-          <Button className="w-full text-base">Login</Button>
+        <CardFooter
+          className="flex justify-center w-full"
+          onClick={handleLogin}
+        >
+          {!isLoading ? (
+            <Button className="w-full text-base">Login</Button>
+          ) : (
+            <Button className="w-full text-base">...logging in</Button>
+          )}
         </CardFooter>
       </Card>
     </div>

@@ -3,6 +3,8 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 import { toast } from "@/hooks/use-toast";
+import { useDispatch } from "react-redux";
+import { setToken } from "@/store/slices/tokenSlice";
 
 const baseURL = "http://localhost:8000/api";
 
@@ -12,6 +14,8 @@ const OTPCard = ({ setIsOTPModalOpen }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isError) {
@@ -51,6 +55,8 @@ const OTPCard = ({ setIsOTPModalOpen }) => {
         throw new Error("Error while signing up : " + resJson.message);
       }
 
+      localStorage.setItem("jotter-token", resJson.token);
+      dispatch(setToken(resJson.token));
       setIsOTPModalOpen(false);
     } catch (err) {
       console.error(err.message || err.toString());
